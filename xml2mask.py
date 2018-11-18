@@ -18,6 +18,8 @@ import scipy.misc
 import sys
 from tqdm import tqdm
 
+
+
 class polygonReader(object):
     def __init__(self, dataset, objects):
         """
@@ -56,7 +58,7 @@ class polygonReader(object):
         """
         Generate all masks in one layer
         :param dim: the size of the mask, tuple
-        :return: masks, ndarray
+        :return: masks, {file1: ndarray(mask1), file2: ndarray(mask2), ...}
         """
         width, height = dim
 
@@ -87,21 +89,50 @@ class polygonReader(object):
             plt.imsave(self.path + file.split('.')[0]+'.jpg', mask, cmap="gray")
 
 
-    def generateMask2(self, (width, height)=(400,400), resize=(400,400)):
-        mask_dict = dict()
-        for obj, polygons in self.data.iteritems():
-            masks = np.zeros((len(polygons), resize[0], resize[1]))
-            for i,poly in enumerate(polygons):
-                img = Image.new('L', (width, height), 0)
-                ImageDraw.Draw(img).polygon(poly, outline=1, fill=1)
-                mask = np.array(img)*255
-                mask = scipy.misc.imresize(mask, resize)
-                masks[i,:,:] = mask
-            mask_dict[obj] = masks # for visualization purpose
-        return mask_dict
+    def generateMask2(self, dim=(400,400), resize=(400,400), saveOnline=False):
+        """
+        Generate masks on individual layers
+        :param dim: original dimension of masks, tuple
+        :param resize: resize dimension of masks, tuple
+        :return: multilayer Masks, {file1:ndarray(mask1), file2:ndarray(mask2), ...} if not saveOnline; otherwise, save masks, return is meaningless
+        """
+
+        width, height = dim
+        masks = dict()
+        nm = len(self.objects)
+        lines = dict()
+        for i, obj in enumerate(self.objects):
+            lines[obj] = (i+1)*255/nm
+
+        for f, objects in self.data.iteritems():
+            if objects == None:
+                img = Image.new('L', (resize[0], resize[1]), 0)
+                masks[f] = np.array(img)
+                if saveOnline:
+                    np.save(self.path + f.split('.')[0], np.array(img))
+                    masks[f] = None
+            else:
+                masks_ndarray = np.zeros((len(objects), resize[0], resize[1]))
+                for i, obj in enumerate(objects):
+                    img = Image.new('L', (width, height), 0)
+                    name = obj.keys()[0]
+                    l = lines[name]
+                    poly = obj[name][0]
+                    ImageDraw.Draw(img).polygon(poly, outline=l, fill=l)
+                    mask = np.array(img)
+                    mask = scipy.misc.imresize(mask, resize)
+                    masks_ndarray[i, :, :] = mask
+                if not saveOnline:
+                    masks[f] = masks_ndarray
+                else:
+                    np.save(self.path + f.split('.')[0], masks_ndarray)
+                    masks[f] = None
+
+
 
 
 if __name__ == "__main__":
     objects = ['ndr', 'dr']
     polygon = polygonReader("tornado", objects)
-    polygon.saveMask( dim=(4000, 4000) )
+    polygon.saveMask(dim=(4000, 4000))
+    #masks = polygon.generateMask2(dim=(4000, 4000), resize=(4000, 4000), saveOnline=True)
