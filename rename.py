@@ -1,3 +1,12 @@
+"""
+rename.py
+rename training and annotation files by numerical order
+Zhiang Chen, Nov 2018
+
+Copyright (c) 2018 Distributed Robotic Exploration and Mapping Systems Laboratory, ASU
+"""
+
+
 import os
 from PIL import Image
 import numpy as np

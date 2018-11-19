@@ -134,5 +134,5 @@ class polygonReader(object):
 if __name__ == "__main__":
     objects = ['ndr', 'dr']
     polygon = polygonReader("tornado", objects)
-    polygon.saveMask(dim=(4000, 4000))
-    #masks = polygon.generateMask2(dim=(4000, 4000), resize=(4000, 4000), saveOnline=True)
+    #polygon.saveMask(dim=(4000, 4000))
+    masks = polygon.generateMask2(dim=(4000, 4000), resize=(4000, 4000), saveOnline=True)
