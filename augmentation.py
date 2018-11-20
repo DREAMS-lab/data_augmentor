@@ -1,5 +1,5 @@
 """
-augmentor.py
+augmentation.py
 data augmentation
 Zhiang Chen, Nov 2018
 
@@ -21,7 +21,7 @@ def rotateImage(image, angle):
   result = cv2.warpAffine(image, rot_mat, image.shape[:2], flags=cv2.INTER_LINEAR)
   return result
 
-def view_channel(image, c=0):
+def viewChannel(image, c=0):
     """
     visualize one channel of the multi-channel image
     :param image: multi-channel image, ndarray
@@ -37,9 +37,36 @@ def view_channel(image, c=0):
         plt.imshow(img, cmap='gray')
         plt.show()
 
+def zoom(image, zoom_scale):
+    size = image.shape
+    image = cv2.resize(image, None, fx=zoom_scale, fy=zoom_scale)
+    new_size = image.shape
+
+    if len(size) == 3:
+        if zoom_scale > 1:
+            return image[(new_size[0] - size[0]) / 2:(new_size[0] - size[0]) / 2 + size[0],
+                        (new_size[1] - size[1]) / 2:(new_size[1] - size[1]) / 2 + size[1], :]
+        elif zoom_scale == 1:
+            return image
+        else:
+            new_image = np.zeros(size).astype('uint8')
+            new_image[(size[0] - new_size[0]) / 2:(size[0] - new_size[0]) / 2 + new_size[0],
+            (size[1] - new_size[1]) / 2:(size[1] - new_size[1]) / 2 + new_size[1], :] = image
+            return new_image
+    else:
+        if zoom_scale > 1:
+            return image[(new_size[0]-size[0])/2:(new_size[0]-size[0])/2+size[0],
+                        (new_size[1]-size[1])/2:(new_size[1]-size[1])/2+size[1]]
+        elif zoom_scale == 1:
+            return image
+        else:
+            new_image = np.zeros(size).astype('uint8')
+            new_image[(size[0] - new_size[0]) / 2:(size[0] - new_size[0]) / 2 + new_size[0],
+            (size[1] - new_size[1]) / 2:(size[1] - new_size[1]) / 2 + new_size[1]] = image
+            return new_image
+
+
 def sample(image, mask, rotation_min, rotation_max, fliplr, flipud, zoom_min, zoom_max):
-    print(image.shape)
-    print(mask.shape)
     angle = np.random.uniform(rotation_min, rotation_max)
     image = rotateImage(image, angle)
     mask = rotateImage(mask, angle)
@@ -55,20 +82,12 @@ def sample(image, mask, rotation_min, rotation_max, fliplr, flipud, zoom_min, zo
             mask = np.flipud(mask)
 
     zoom_scale = np.random.uniform(zoom_min, zoom_max)
-
-    image = cv2.resize(image, None, fx=zoom_scale, fy=zoom_scale)
-    mask = cv2.resize(mask, None, fx=zoom_scale, fy=zoom_scale)
-
-    if zoom_scale>1:
-        pass
-    elif zoom_scale == 1:
-        pass
-    else:
-        pass
+    image = zoom(image, zoom_scale)
+    mask = zoom(mask, zoom_scale)
 
     return image, mask
 
-def augmentor(image_path, annotation_path, mode=1, batch_number=1, rotation_min=0, rotation_max=0,
+def augmentor(image_path, annotation_path, mode=1, resize_dim=None, batch_number=1, rotation_min=0, rotation_max=0,
               fliplr=False, flipud=False, zoom_min=1, zoom_max=1):
     """
     :param image_path:
@@ -79,7 +98,6 @@ def augmentor(image_path, annotation_path, mode=1, batch_number=1, rotation_min=
     :param rotation_max:
     :param fliplr:
     :param flipud:
-    :param shift:
     :param zoom_min:
     :param zoom_max:
     :return:
@@ -91,7 +109,6 @@ def augmentor(image_path, annotation_path, mode=1, batch_number=1, rotation_min=
     annotation_suffix = '.' + annotation_files[0].split('.')[-1]
 
     while c < batch_number:
-        c += 1
         for image in image_files:
             if image.split(".")[0] in annotation_prefix:
                 annotation = image.split(".")[0] + annotation_suffix
@@ -105,67 +122,22 @@ def augmentor(image_path, annotation_path, mode=1, batch_number=1, rotation_min=
                 else:
                     print("do something to process this scenario")
 
-                print(annotation)
+                if resize_dim != None:
+                    img = cv2.resize(img, dsize=resize_dim)
+                    mask = cv2.resize(mask, dsize=resize_dim)
+
                 img,mask = sample(img, mask, rotation_min, rotation_max,
                                   fliplr, flipud, zoom_min, zoom_max)
-                yield img,mask
+                yield img, mask, image.split('.')[0]
 
             else:
                 print("Cannot find the corresponding anntation file for " + image)
-
-'''
-def resize(image, new_size, keep_size=True):
-    """
-    resize the multi-channel image.
-    :param image: multi-channel image, ndarray, shape=[width, height, channel]
-    :param size: new size, tuple
-    :param keep_size: keep the original size if True, then fill the boundaries with 0 if needed
-    :return: resized image, ndarray
-    Note this only support the intensity ranging (0,255)
-    """
-    size = image.shape
-    if size[0:2] == new_size:
-        return image
-
-    if keep_size:
-        # either greater or smaller on width and height dimensions
-        assert (new_size[0] - size[0]) * (new_size[1] - size[1]) >= 0
-
-    if len(image.shape) == 2:
-        image = imresize(image, new_size, mode='RGB')
-        if keep_size:
-            if ((new_size[0] - size[0]) >= 0) & ((new_size[1] - size[1]) >= 0):
-                image = image[(new_size[0]-size[0])/2:(new_size[0]-size[0])/2+size[0],
-                        (new_size[1]-size[1])/2:(new_size[1]-size[1])/2+size[1]]
-            else:
-                new_image = np.zeros(size)
-                new_image[(size[0]-new_size[0])/2:(size[0]-new_size[0])/2+new_size[0],
-                (size[1]-new_size[1])/2:(size[1]-new_size[1])/2+new_size[1]] = image
-                image = new_image
-
-    else:
-        image = np.swapaxes(image, 1, 2)
-        image = np.swapaxes(image, 0, 1).tolist()
-        image = np.array([imresize(np.array(img, mode='RGB'), new_size) for img in image])
-        image = np.swapaxes(image, 0, 1)
-        image = np.swapaxes(image, 1, 2)
-
-        if keep_size:
-            if ((new_size[0] - size[0]) >= 0) & ((new_size[1] - size[1]) >= 0):
-                image = image[(new_size[0] - size[0]) / 2:(new_size[0] - size[0]) / 2 + size[0],
-                        (new_size[1] - size[1]) / 2:(new_size[1] - size[1]) / 2 + size[1], :]
-            else:
-                new_image = np.zeros(size)
-                new_image[(size[0] - new_size[0]) / 2:(size[0] - new_size[0]) / 2 + new_size[0],
-                (size[1] - new_size[1]) / 2:(size[1] - new_size[1]) / 2 + new_size[1], :] = image
-                image = new_image
-
-    return image
-'''
+        c += 1
 
 if __name__  ==  "__main__":
     config = dict(
-                mode=2,
+                mode=1,
+                resize_dim=(800, 800),
                 batch_number=2,
                 rotation_min=-90,
                 rotation_max=90,
@@ -175,11 +147,9 @@ if __name__  ==  "__main__":
                 zoom_max=1.2)
 
     image_path = './datasets/tornado/img/'
-    annotation_path = './datasets/tornado/ann/'
+    annotation_path = './datasets/tornado/anng/'
     aug = augmentor(image_path, annotation_path, **config)
 
-    for i,m in aug:
-        #print(i.shape)
-        #print(m.shape)
+    for i,m,f in aug:
         print('...')
 

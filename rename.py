@@ -78,9 +78,6 @@ class renamer(object):
             else:
                 print("Cannot find corresponding annotation file for "+image)
 
-    def rename_npy(self):
-        pass
-
 
 if __name__ == "__main__":
     rn = renamer('./datasets/tornado/img/', './datasets/tornado/ann/')

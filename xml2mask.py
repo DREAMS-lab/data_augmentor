@@ -90,10 +90,10 @@ class polygonReader(object):
 
     def generateMask2(self, dim=(400,400), resize=(400,400), saveOnline=False):
         """
-        Generate masks on individual layers, the classes of objects is also represented by intensities ranging from (0,255)
+        Generate masks on individual layers, the classes of objects is also represented by intensities ranging from (0, 255)
         :param dim: original dimension of masks, tuple
         :param resize: resize dimension of masks, tuple
-        :return: multilayer Masks, {file1:ndarray(mask1), file2:ndarray(mask2), ...} if not saveOnline; otherwise, save masks,and return is meaningless
+        :return: multilayer Masks, {file1:ndarray(mask1), file2:ndarray(mask2), ...} if not saveOnline; otherwise, save masks, and return is meaningless
         Note: the .npy is of dimension (width, height, nm_objects)
         """
 
@@ -104,7 +104,7 @@ class polygonReader(object):
         for i, obj in enumerate(self.objects):
             lines[obj] = (i+1)*255/nm
 
-        for f, objects in self.data.iteritems():
+        for f, objects in tqdm(self.data.iteritems()):
             if objects == None:
                 img = Image.new('L', (resize[0], resize[1]), 0)
                 masks[f] = np.array(img)
