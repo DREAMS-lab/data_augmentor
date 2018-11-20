@@ -12,11 +12,10 @@ import os
 from lxml import etree
 import numpy as np
 from PIL import Image, ImageDraw
-import matplotlib.pyplot as plt
 import pickle
 import scipy.misc
-import sys
 from tqdm import tqdm
+import cv2
 
 
 
@@ -86,15 +85,16 @@ class polygonReader(object):
         masks = self.generateMask(dim)
 
         for file, mask in tqdm(masks.iteritems()):
-            plt.imsave(self.path + file.split('.')[0]+'.jpg', mask, cmap="gray")
+            cv2.imwrite(self.path + file.split('.')[0]+'.jpg', mask)
 
 
     def generateMask2(self, dim=(400,400), resize=(400,400), saveOnline=False):
         """
-        Generate masks on individual layers
+        Generate masks on individual layers, the classes of objects is also represented by intensities ranging from (0,255)
         :param dim: original dimension of masks, tuple
         :param resize: resize dimension of masks, tuple
-        :return: multilayer Masks, {file1:ndarray(mask1), file2:ndarray(mask2), ...} if not saveOnline; otherwise, save masks, return is meaningless
+        :return: multilayer Masks, {file1:ndarray(mask1), file2:ndarray(mask2), ...} if not saveOnline; otherwise, save masks,and return is meaningless
+        Note: the .npy is of dimension (width, height, nm_objects)
         """
 
         width, height = dim
@@ -122,6 +122,8 @@ class polygonReader(object):
                     mask = np.array(img)
                     mask = scipy.misc.imresize(mask, resize)
                     masks_ndarray[i, :, :] = mask
+                masks_ndarray = np.swapaxes(masks_ndarray, 0, 1)
+                masks_ndarray = np.swapaxes(masks_ndarray, 1, 2)
                 if not saveOnline:
                     masks[f] = masks_ndarray
                 else:
@@ -134,5 +136,5 @@ class polygonReader(object):
 if __name__ == "__main__":
     objects = ['ndr', 'dr']
     polygon = polygonReader("tornado", objects)
-    #polygon.saveMask(dim=(4000, 4000))
-    masks = polygon.generateMask2(dim=(4000, 4000), resize=(4000, 4000), saveOnline=True)
+    polygon.saveMask(dim=(4000, 4000))
+    #masks = polygon.generateMask2(dim=(4000, 4000), resize=(4000, 4000), saveOnline=True)
