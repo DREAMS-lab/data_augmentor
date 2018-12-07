@@ -17,3 +17,11 @@ Zhiang Chen, Nov 2018
 - add annotations with prefix "label_" 
 - convert with `.jpg` and `.png`
 - work with `.npy`
+
+### 3. augmentation.py
+[augmentation.py](https://github.com/DREAMS-lab/data_augmentor/blob/master/augmentation.py) augments images and corresponding annotations with same rules, which include  
+- resizing
+- left-right flipping
+- up-down flipping
+- rotating
+- zooming-in and zooming-out
