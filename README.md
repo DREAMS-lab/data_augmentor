@@ -28,3 +28,14 @@ Zhiang Chen, Nov 2018
 
 ### 4. generateCSV.py
 [generateCSV.py](https://github.com/DREAMS-lab/data_augmentor/blob/master/generateCSV.py) generates CSV files for RetinaNet https://github.com/DREAMS-lab/keras-retinanet. See the test main for how to use it: https://github.com/DREAMS-lab/data_augmentor/blob/master/generateCSV.py#L67.
+
+### 5. processTiff.py
+[processTiff.py](https://github.com/DREAMS-lab/data_augmentor/blob/master/processTiff.py) provides methods of processing GeoTiff. It can
+- split large GeoTiff to small GeoTiff
+- convert GeoTiff to PNG  
+
+This is dependent on GDAL python. To install the related packages:
+```
+$ sudo add-apt-repository ppa:ubuntugis/ppa && sudo apt-get update
+$ sudo apt-get install gdal-bin
+```
