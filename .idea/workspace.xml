@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e339d3e-f489-4c50-9dbd-7c5495473bb7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/data_augmentor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/data_augmentor.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/augmentationSample.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/augmentationSample.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/annotations.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generateCSV.py" beforeDir="false" afterPath="$PROJECT_DIR$/generateCSV.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +59,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/generateCSV.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="931">
+            <state relative-caret-position="1399">
               <caret line="68" column="20" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
               <folding>
                 <element signature="e#235#253#0" expanded="true" />
@@ -111,7 +112,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -123,10 +123,11 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/venv" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../neural_networks/keras-retinanet" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -261,7 +262,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="110" y="35" width="3730" height="2125" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.17634292" />
@@ -387,7 +387,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/generateCSV.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="931">
+        <state relative-caret-position="1399">
           <caret line="68" column="20" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
           <folding>
             <element signature="e#235#253#0" expanded="true" />

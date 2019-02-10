@@ -65,7 +65,7 @@ class generatorCSV(object):
 
 
 if __name__  ==  "__main__":
-    npy_path = "../datasets/rocks_aug/val/"
+    npy_path = "./datasets/rocks_aug/val/"
     image_path = "../datasets/rocks_aug/val/"
     objects = ["rock"]
     csv_g = generatorCSV(npy_path, image_path, objects)
