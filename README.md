@@ -25,3 +25,6 @@ Zhiang Chen, Nov 2018
 - up-down flipping
 - rotating
 - zooming-in and zooming-out
+
+### 4. generateCSV.py
+[generateCSV.py](https://github.com/DREAMS-lab/data_augmentor/blob/master/generateCSV.py) generates CSV files for RetinaNet https://github.com/DREAMS-lab/keras-retinanet. See the test main for how to use it: https://github.com/DREAMS-lab/data_augmentor/blob/master/generateCSV.py#L67.
