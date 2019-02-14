@@ -49,6 +49,15 @@ class polygonReader(object):
                                 polygon = []
                                 for pt in record.xpath("polygon/pt"):
                                     polygon.append((int(pt.xpath("x")[0].text), int(pt.xpath("y")[0].text)))
+                                if len(polygon) == 0:
+                                    xmin = int(record.xpath("segm/box/xmin")[0].text)
+                                    xmax = int(record.xpath("segm/box/xmax")[0].text)
+                                    ymin = int(record.xpath("segm/box/ymin")[0].text)
+                                    ymax = int(record.xpath("segm/box/ymax")[0].text)
+                                    polygon.append((xmin, ymin))
+                                    polygon.append((xmin, ymax))
+                                    polygon.append((xmax, ymax))
+                                    polygon.append((xmax, ymin))
                                 i = len(data[file]) - 1
                                 data[file][i][obj].append(tuple(polygon))
         return data
