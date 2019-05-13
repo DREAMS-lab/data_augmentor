@@ -16,10 +16,14 @@ import os
 import matplotlib.pyplot as plt
 
 def rotateImage(image, angle):
-  image_center = tuple(np.array(image.shape[:2]) / 2)
-  rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
-  result = cv2.warpAffine(image, rot_mat, image.shape[:2], flags=cv2.INTER_LINEAR)
-  return result
+    l = len(image.shape)
+    image_center = tuple(np.array(image.shape[:2]) / 2)
+    rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
+    result = cv2.warpAffine(image, rot_mat, image.shape[:2], flags=cv2.INTER_LINEAR)
+    if len(result.shape)<l:
+        y,x = result.shape
+        result = result.reshape((y,x,1))
+    return result
 
 def viewChannel(image, c=0):
     """
@@ -39,9 +43,13 @@ def viewChannel(image, c=0):
 
 def zoom(image, zoom_scale):
     size = image.shape
+    l = len(size)
     image = cv2.resize(image, None, fx=zoom_scale, fy=zoom_scale)
+    if len(image.shape) < l:
+        y,x = image.shape
+        image = image.reshape((y,x,1))
     new_size = image.shape
-
+    
     if len(size) == 3:
         if zoom_scale > 1:
             return image[(new_size[0] - size[0]) / 2:(new_size[0] - size[0]) / 2 + size[0],
@@ -70,7 +78,7 @@ def sample(image, mask, rotation_min, rotation_max, fliplr, flipud, zoom_min, zo
     angle = np.random.uniform(rotation_min, rotation_max)
     image = rotateImage(image, angle)
     mask = rotateImage(mask, angle)
-
+    
     if fliplr:
         if np.random.random() < 0.5:
             image = np.fliplr(image)
@@ -80,11 +88,11 @@ def sample(image, mask, rotation_min, rotation_max, fliplr, flipud, zoom_min, zo
         if np.random.random() < 0.5:
             image = np.flipud(image)
             mask = np.flipud(mask)
-
+            
     zoom_scale = np.random.uniform(zoom_min, zoom_max)
     image = zoom(image, zoom_scale)
     mask = zoom(mask, zoom_scale)
-
+    
     return image, mask
 
 def augmentor(image_path, annotation_path, mode=1, resize_dim=None, batch_number=1, rotation_min=0, rotation_max=0,
@@ -121,10 +129,17 @@ def augmentor(image_path, annotation_path, mode=1, resize_dim=None, batch_number
                     mask = np.load(annotation_path + annotation)
                 else:
                     print("do something to process this scenario")
-
+                
+                # bug: when the mask size is (y,x,1) the return is (y,x)
+                # bug: resize also transpose the desired size
+                l = len(mask.shape)
                 if resize_dim != None:
                     img = cv2.resize(img, dsize=resize_dim)
                     mask = cv2.resize(mask, dsize=resize_dim)
+                    if len(mask.shape) < l:
+                        y,x = mask.shape
+                        mask = mask.reshape((y, x, 1))
+                
 
                 img,mask = sample(img, mask, rotation_min, rotation_max,
                                   fliplr, flipud, zoom_min, zoom_max)
