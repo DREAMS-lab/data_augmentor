@@ -7,7 +7,7 @@ Copyright (c) 2018 Distributed Robotic Exploration and Mapping Systems Laborator
 Zhiang Chen, Nov 2018
 
 ### 1. xml2mask.py
-[xml2mask.py](https://github.com/DREAMS-lab/data_augmentor/blob/master/xml2mask.py) provides methods of generating masks from xml files that downloaded from web-based annotation tool [LabelMe](http://labelme.csail.mit.edu). It can
+[xml2mask.py](https://github.com/DREAMS-lab/data_augmentor/blob/master/xml2mask.py) provides methods of generating masks from xml files downloaded from web-based annotation tool [LabelMe](http://labelme.csail.mit.edu). It can
 - generate and combine all masks on a single layer and save as `.jpg` files. e.g. mask.shape = [width, height]
 - generate all masks on individual layers and save as `.npy` files. e.g. mask.shape = [nm_objects, width, height]
 
@@ -33,6 +33,9 @@ Zhiang Chen, Nov 2018
 [processTiff.py](https://github.com/DREAMS-lab/data_augmentor/blob/master/processTiff.py) provides methods of processing GeoTiff. It can
 - split large GeoTiff to small GeoTiff
 - convert GeoTiff to PNG  
+
+### 6. labelboxReader.py
+[labelReader.py](https://github.com/DREAMS-lab/data_augmentor/blob/master/labelboxReader.py) provides methods of generating masks from json files downloaded from web-based annotation tool [LabelBox](https://labelbox.com). 
 
 This is dependent on GDAL python. To install the related packages:
 ```

@@ -79,7 +79,9 @@ class LabelboxReader(object):
                 cls, nd_label = self.convert2ndarray(label['Label'])
 
             # save ndarray and classes in two files
-            print(nd_label.shape)
+            nd_label = np.swapaxes(nd_label, 0, 1)
+            nd_label = np.swapaxes(nd_label, 1, 2)
+
             cls_file_name = dataset_name + "_" + image_name.split('.')[0] + "_cls.npy"
             nd_file_name = dataset_name + "_" + image_name.split('.')[0] + "_nd.npy"
             np.save("../tiles/" + cls_file_name, cls, allow_pickle=True)
