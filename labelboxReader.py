@@ -25,32 +25,40 @@ class LabelboxReader(object):
         if len(polygon) > 2:
             img = Image.new('L', (self.H, self.W), 0)
             ImageDraw.Draw(img).polygon(polygon, outline=255, fill=255)
-        return polygon
+            return True, np.array(img)
+        else:
+            return False, None
 
     def convert2ndarray(self, masks_dict):
         cls = []
         nd = []
         if masks_dict.get('nd_roof', False):
             for nd_roof in masks_dict['nd_roof']:
-                cls.append(0)
-                nd.append(self.draw_poly(nd_roof['geometry']))
+                if self.draw_poly(nd_roof['geometry'])[0]:
+                    cls.append(0)
+                    nd.append(self.draw_poly(nd_roof['geometry'])[1])
         if masks_dict.get('d0_roof', False):
             for d0_roof in masks_dict['d0_roof']:
-                cls.append(1)
-                nd.append(self.draw_poly(d0_roof['geometry']))
+                if self.draw_poly(d0_roof['geometry'])[0]:
+                    cls.append(1)
+                    nd.append(self.draw_poly(d0_roof['geometry'])[1])
         if masks_dict.get('d1_roof', False):
             for d1_roof in masks_dict['d1_roof']:
-                cls.append(2)
-                nd.append(self.draw_poly(d1_roof['geometry']))
+                if self.draw_poly(d1_roof['geometry'])[0]:
+                    cls.append(2)
+                    nd.append(self.draw_poly(d1_roof['geometry'])[1])
         if masks_dict.get('d2_roof', False):
             for d2_roof in masks_dict['d2_roof']:
-                cls.append(3)
-                nd.append(self.draw_poly(d2_roof['geometry']))
+                if self.draw_poly(d2_roof['geometry'])[0]:
+                    cls.append(3)
+                    nd.append(self.draw_poly(d2_roof['geometry'])[1])
         if masks_dict.get('d3_roof', False):
             for d3_roof in masks_dict['d3_roof']:
-                cls.append(4)
-                nd.append(self.draw_poly(d3_roof['geometry']))
-        return cls, nd
+                if self.draw_poly(d3_roof['geometry'])[0]:
+                    cls.append(4)
+                    nd.append(self.draw_poly(d3_roof['geometry'])[1])
+
+        return np.array(cls), np.array(nd)
 
     def convert(self):
         for label in self.labels_dict:
@@ -71,12 +79,13 @@ class LabelboxReader(object):
                 cls, nd_label = self.convert2ndarray(label['Label'])
 
             # save ndarray and classes in two files
+            print(nd_label.shape)
             cls_file_name = dataset_name + "_" + image_name.split('.')[0] + "_cls.npy"
             nd_file_name = dataset_name + "_" + image_name.split('.')[0] + "_nd.npy"
-            np.save("../labels/" + cls_file_name, cls)
-            np.save("../labels/" + nd_file_name, nd_label)
+            np.save("../tiles/" + cls_file_name, cls, allow_pickle=True)
+            np.save("../tiles/" + nd_file_name, nd_label, allow_pickle=True)
 
 if __name__  ==  "__main__":
-    lb = LabelboxReader(image_size=(2000, 2000))
+    lb = LabelboxReader(image_size=(1000, 1000))
     lb.readJson("../eureka_labels.json")
     lb.convert()
