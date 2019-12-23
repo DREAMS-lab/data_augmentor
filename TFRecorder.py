@@ -16,6 +16,7 @@ import PIL
 import hashlib
 import numpy as np
 import matplotlib.pyplot as plt
+import cv2
 
 
 def int64_feature(value):
@@ -89,7 +90,7 @@ class TFConverter(object):
         self.annotations = [f for f in os.listdir(annotation_path) if f.endswith(".npy")]
         self.images = [i for i in os.listdir(image_path) if i.endswith("jpg")]
 
-    def convert(self, output_path="."):
+    def convert(self, gray_scale=False, output_path="."):
         writer = tf.io.TFRecordWriter(output_path + "/tf.record")
         for image in self.images:
             annotation = image.split(".")[0] + ".npy"
@@ -103,19 +104,26 @@ class TFConverter(object):
                 if masks.max()  < 1:
                     continue
                 else:
-                    tf_example = self._getTFExample(annotation_file, image_file)
+                    tf_example = self._getTFExample(annotation_file, image_file, gray_scale)
                     writer.write(tf_example.SerializeToString())
         writer.close()
 
 
 
-    def _getTFExample(self, annotation_file_path, image_file_path):
-        # TODO: modify this function
-
-        fid = tf.io.gfile.GFile(image_file_path, 'rb')  # tensorflow 2.0
-        encoded_jpg = fid.read()
-        encoded_jpg_io = io.BytesIO(encoded_jpg)
-        image = PIL.Image.open(encoded_jpg_io)
+    def _getTFExample(self, annotation_file_path, image_file_path, gray_scale):
+        if not gray_scale:
+            fid = tf.io.gfile.GFile(image_file_path, 'rb')  # tensorflow 2.0
+            encoded_jpg = fid.read()
+            encoded_jpg_io = io.BytesIO(encoded_jpg)
+            image = PIL.Image.open(encoded_jpg_io)
+        else:
+            gray_image = cv2.imread(image_file_path, cv2.IMREAD_GRAYSCALE)
+            image = Image.fromarray(gray_image)
+            encoded_jpg_io = BytesIO()
+            image.save(encoded_jpg_io, 'JPEG')
+            encoded_jpg = encoded_jpg_io.getvalue()
+            encoded_jpg_io = io.BytesIO(encoded_jpg)
+            image = PIL.Image.open(encoded_jpg_io)
 
         if image.format != 'JPEG':
             raise ValueError('Image format not JPEG')
@@ -148,12 +156,6 @@ class TFConverter(object):
             ymin.append(float(bbox[2]) / height)
             xmax.append(float(bbox[1]) / width)
             ymax.append(float(bbox[3]) / height)
-            """
-            xmin.append(float(obj['bndbox']['xmin']) / width)
-            ymin.append(float(obj['bndbox']['ymin']) / height)
-            xmax.append(float(obj['bndbox']['xmax']) / width)
-            ymax.append(float(obj['bndbox']['ymax']) / height)
-            """
             id = int(mask.max())
             classes.append(id)
             classes_text.append(self.object_list[id-1])
@@ -188,11 +190,12 @@ class TFConverter(object):
         rmin, rmax = np.where(rows)[0][[0, -1]]
         cmin, cmax = np.where(cols)[0][[0, -1]]
 
-        xmin, xmax, ymin, ymax = rmin, rmax, cmin, cmax
+        #xmin, xmax, ymin, ymax = rmin, rmax, cmin, cmax  # the bounding box is transposed
+        ymin, ymax, xmin, xmax = rmin, rmax, cmin, cmax
 
         return xmin, xmax, ymin, ymax
 
 
 if __name__ == "__main__":
     tfrecorder = TFConverter(['rock'], "./datasets/rocks", "./datasets/rocks")
-    tfrecorder.convert()
+    tfrecorder.convert(gray_scale=True)

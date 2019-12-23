@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e339d3e-f489-4c50-9dbd-7c5495473bb7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/TFRecorder.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/data_augmentor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/data_augmentor.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TFRecorder.py" beforeDir="false" afterPath="$PROJECT_DIR$/TFRecorder.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,25 +223,29 @@
       <screen x="67" y="27" width="1853" height="1052" />
     </state>
     <state x="670" y="154" width="642" height="795" key="#TFRecorder/67.27.1853.1052@67.27.1853.1052" timestamp="1576341682106" />
-    <state width="1830" height="278" key="GridCell.Tab.0.bottom" timestamp="1576346180695">
+    <state width="1830" height="142" key="GridCell.Tab.0.bottom" timestamp="1577124717750">
       <screen x="67" y="27" width="1853" height="1052" />
     </state>
-    <state width="1830" height="278" key="GridCell.Tab.0.bottom/67.27.1853.1052@67.27.1853.1052" timestamp="1576346180695" />
-    <state width="1830" height="278" key="GridCell.Tab.0.center" timestamp="1576346180695">
+    <state width="1830" height="142" key="GridCell.Tab.0.bottom/67.27.1853.1052@67.27.1853.1052" timestamp="1577124717750" />
+    <state width="1830" height="142" key="GridCell.Tab.0.center" timestamp="1577124717750">
       <screen x="67" y="27" width="1853" height="1052" />
     </state>
-    <state width="1830" height="278" key="GridCell.Tab.0.center/67.27.1853.1052@67.27.1853.1052" timestamp="1576346180695" />
-    <state width="1830" height="278" key="GridCell.Tab.0.left" timestamp="1576346180695">
+    <state width="1830" height="142" key="GridCell.Tab.0.center/67.27.1853.1052@67.27.1853.1052" timestamp="1577124717750" />
+    <state width="1830" height="142" key="GridCell.Tab.0.left" timestamp="1577124717750">
       <screen x="67" y="27" width="1853" height="1052" />
     </state>
-    <state width="1830" height="278" key="GridCell.Tab.0.left/67.27.1853.1052@67.27.1853.1052" timestamp="1576346180695" />
-    <state width="1830" height="278" key="GridCell.Tab.0.right" timestamp="1576346180695">
+    <state width="1830" height="142" key="GridCell.Tab.0.left/67.27.1853.1052@67.27.1853.1052" timestamp="1577124717750" />
+    <state width="1830" height="142" key="GridCell.Tab.0.right" timestamp="1577124717750">
       <screen x="67" y="27" width="1853" height="1052" />
     </state>
-    <state width="1830" height="278" key="GridCell.Tab.0.right/67.27.1853.1052@67.27.1853.1052" timestamp="1576346180695" />
+    <state width="1830" height="142" key="GridCell.Tab.0.right/67.27.1853.1052@67.27.1853.1052" timestamp="1577124717750" />
     <state x="485" y="183" width="1016" height="738" key="SettingsEditor" timestamp="1576341694788">
       <screen x="67" y="27" width="1853" height="1052" />
     </state>
     <state x="485" y="183" width="1016" height="738" key="SettingsEditor/67.27.1853.1052@67.27.1853.1052" timestamp="1576341694788" />
+    <state x="653" y="377" key="com.intellij.ide.util.TipDialog" timestamp="1577121436023">
+      <screen x="67" y="27" width="1853" height="1052" />
+    </state>
+    <state x="653" y="377" key="com.intellij.ide.util.TipDialog/67.27.1853.1052@67.27.1853.1052" timestamp="1577121436023" />
   </component>
 </project>
