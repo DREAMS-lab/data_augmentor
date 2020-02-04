@@ -1,3 +1,4 @@
+*.record
 datasets/*
 .ipynb_checkpoints/
 
