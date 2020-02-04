@@ -113,7 +113,8 @@ class polygonReader(object):
         for i, obj in enumerate(self.objects):
             lines[obj] = (i+1)*255/nm
 
-        for f, objects in tqdm(self.data.iteritems()):
+        #for f, objects in tqdm(self.data.iteritems()):  # python2
+        for f, objects in tqdm(self.data.items()):  # python3
             if objects == None:
                 img = Image.new('L', (resize[0], resize[1]), 0)
                 masks[f] = np.array(img)

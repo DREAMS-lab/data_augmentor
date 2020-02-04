@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e339d3e-f489-4c50-9dbd-7c5495473bb7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/data_augmentor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/data_augmentor.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/augmentationSample.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/augmentationSample.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/labelboxReader.py" beforeDir="false" afterPath="$PROJECT_DIR$/labelboxReader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xml2mask.py" beforeDir="false" afterPath="$PROJECT_DIR$/xml2mask.py" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,7 +32,13 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1SY1LEye1xvfWURqwgUQLqdu3Zm" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
@@ -39,19 +47,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Python.labelboxReader">
+  <component name="RunManager" selected="Python.multidimension">
     <configuration name="augmentor" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="data_augmentor" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -115,7 +111,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="rename" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="multidimension" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="data_augmentor" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -127,7 +123,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rename.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/multidimension.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -160,17 +156,17 @@
     <list>
       <item itemvalue="Python.augmentor" />
       <item itemvalue="Python.generateCSV" />
-      <item itemvalue="Python.rename" />
-      <item itemvalue="Python.xml2mask" />
       <item itemvalue="Python.labelboxReader" />
+      <item itemvalue="Python.xml2mask" />
+      <item itemvalue="Python.multidimension" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.multidimension" />
         <item itemvalue="Python.labelboxReader" />
         <item itemvalue="Python.generateCSV" />
         <item itemvalue="Python.xml2mask" />
         <item itemvalue="Python.augmentor" />
-        <item itemvalue="Python.rename" />
       </list>
     </recent_temporary>
   </component>
@@ -213,5 +209,35 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1586" y="763" width="767" height="931" key="#multidimension" timestamp="1580782311214">
+      <screen x="0" y="34" width="3840" height="2126" />
+    </state>
+    <state x="1586" y="763" width="767" height="931" key="#multidimension/0.34.3840.2126@0.34.3840.2126" timestamp="1580782311214" />
+    <state x="2380" y="552" width="530" height="593" key="FileChooserDialogImpl" timestamp="1580768032100">
+      <screen x="0" y="34" width="3840" height="2126" />
+    </state>
+    <state x="2380" y="552" width="530" height="593" key="FileChooserDialogImpl/0.34.3840.2126@0.34.3840.2126" timestamp="1580768032100" />
+    <state width="2581" height="380" key="GridCell.Tab.0.bottom" timestamp="1580787582039">
+      <screen x="0" y="34" width="3840" height="2126" />
+    </state>
+    <state width="2581" height="380" key="GridCell.Tab.0.bottom/0.34.3840.2126@0.34.3840.2126" timestamp="1580787582039" />
+    <state width="2581" height="380" key="GridCell.Tab.0.center" timestamp="1580787582038">
+      <screen x="0" y="34" width="3840" height="2126" />
+    </state>
+    <state width="2581" height="380" key="GridCell.Tab.0.center/0.34.3840.2126@0.34.3840.2126" timestamp="1580787582038" />
+    <state width="2581" height="380" key="GridCell.Tab.0.left" timestamp="1580787582037">
+      <screen x="0" y="34" width="3840" height="2126" />
+    </state>
+    <state width="2581" height="380" key="GridCell.Tab.0.left/0.34.3840.2126@0.34.3840.2126" timestamp="1580787582037" />
+    <state width="2581" height="380" key="GridCell.Tab.0.right" timestamp="1580787582038">
+      <screen x="0" y="34" width="3840" height="2126" />
+    </state>
+    <state width="2581" height="380" key="GridCell.Tab.0.right/0.34.3840.2126@0.34.3840.2126" timestamp="1580787582038" />
+    <state x="1340" y="779" key="SettingsEditor" timestamp="1580782367825">
+      <screen x="0" y="34" width="3840" height="2126" />
+    </state>
+    <state x="1340" y="779" key="SettingsEditor/0.34.3840.2126@0.34.3840.2126" timestamp="1580782367825" />
   </component>
 </project>

@@ -66,11 +66,11 @@ class LabelboxReader(object):
             image_name = label['External ID']
 
             if label['Label'] == 'Skip':
-                nd_label = np.zeros((self.H, self.W, 1))
+                nd_label = np.zeros((1, self.H, self.W))
                 cls = np.zeros(1)
             elif label['Label'].get('tile_dmg', False):
                 if label['Label']['tile_dmg'] == 'nd':
-                    nd_label = np.zeros((self.H, self.W, 1))
+                    nd_label = np.zeros((1, self.H, self.W))
                     cls = np.zeros(1)
                 else:
                     cls, nd_label = self.convert2ndarray(label['Label'])
@@ -84,10 +84,10 @@ class LabelboxReader(object):
 
             cls_file_name = dataset_name + "_" + image_name.split('.')[0] + "_cls.npy"
             nd_file_name = dataset_name + "_" + image_name.split('.')[0] + "_nd.npy"
-            np.save("../tiles/" + cls_file_name, cls, allow_pickle=True)
-            np.save("../tiles/" + nd_file_name, nd_label, allow_pickle=True)
+            np.save("../Eureka/labels/" + cls_file_name, cls, allow_pickle=True)
+            np.save("../Eureka/labels/" + nd_file_name, nd_label, allow_pickle=True)
 
 if __name__  ==  "__main__":
     lb = LabelboxReader(image_size=(1000, 1000))
-    lb.readJson("../eureka_labels.json")
+    lb.readJson("../Eureka/labels.json")
     lb.convert()
