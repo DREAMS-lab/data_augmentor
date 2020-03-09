@@ -45,15 +45,17 @@ class MultDim(object):
     def cat(self, data1, data2):
         return np.append(data1, data2, axis=2)
 
-    def split(self, data, step, path):
+    def split(self, data, step, path, overlap=0):
         dim = data.shape
         mult = np.zeros((dim[0]+step, dim[1]+step, dim[2]))
         mult[:dim[0], :dim[1], :] = data
-        xn = int(math.ceil(float(dim[0])/step))
-        yn = int(math.ceil(float(dim[1])/step))
+        xn = int(math.ceil(float(dim[0])/(step-overlap)))
+        yn = int(math.ceil(float(dim[1])/(step-overlap)))
         for i in range(xn):
             for j in range(yn):
-                dt = mult[i*step:i*step+step, j*step:j*step+step, :]
+                x = i*(step-overlap)
+                y = j*(step-overlap)
+                dt = mult[x:x+step, y:y+step, :]
                 name = os.path.join(path, str(i)+"_"+str(j)+".npy")
                 np.save(name, dt)
 
@@ -77,7 +79,7 @@ if __name__ == '__main__':
     st = MultDim()
     # split tiles
     """
-    st.readTiff("./datasets/Rock/Orth5.tif", channel=5)
+    st.readTiff("./datasets/C3/Orth5.tif", channel=5)
     R = st.readImage("./datasets/Rock/R.png", channel=1)
     G = st.readImage("./datasets/Rock/G.png", channel=1)
     B = st.readImage("./datasets/Rock/B.png", channel=1)
@@ -89,7 +91,14 @@ if __name__ == '__main__':
     data = st.cat(data, RE)
     data = st.cat(data, NIR)
     data = st.cat(data, DEM)
-    st.split(data, 400, "./datasets/Rock/mult")
+    st.split(data, 400, "./datasets/Rock/mult_10", overlap=10)
     """
     # add annotations
-    st.addAnnotation("./datasets/Rock/mult/", "./datasets/Rock/ann_npy/", "./datasets/Rock/data")
+    # st.addAnnotation("./datasets/Rock/mult/", "./datasets/Rock_test/npy/", "./datasets/Rock_test/mult")
+    #"""
+    RGB = st.readImage("./datasets/C3/C3.png", channel=3)
+    DEM = st.readImage("./datasets/C3/C3_dem.png", channel=3)
+    data = st.cat(RGB, DEM)
+    st.split(data, 400, './datasets/C3/rgbd', overlap=10)
+    #"""
+    #st.addAnnotation("./datasets/C3/rgbd/", "./datasets/C3_test/npy/", "./datasets/C3_test/rocks")

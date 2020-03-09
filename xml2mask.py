@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 xml2mask.py
 Generate masks from xml files, which are from LabelMe http://labelme.csail.mit.edu/
@@ -113,8 +114,7 @@ class polygonReader(object):
         for i, obj in enumerate(self.objects):
             lines[obj] = (i+1)*255/nm
 
-        #for f, objects in tqdm(self.data.iteritems()):  # python2
-        for f, objects in tqdm(self.data.items()):  # python3
+        for f, objects in tqdm(self.data.iteritems()):  # python2
             if objects == None:
                 img = Image.new('L', (resize[0], resize[1]), 0)
                 masks[f] = np.array(img)
@@ -144,7 +144,10 @@ class polygonReader(object):
 
 
 if __name__ == "__main__":
-    objects = ['ndr', 'dr']
-    polygon = polygonReader("tornado", objects)
-    polygon.saveMask(dim=(4000, 4000))
+    #objects = ['ndr', 'dr']
+    #polygon = polygonReader("tornado", objects)
+    #polygon.saveMask(dim=(4000, 4000))
     #masks = polygon.generateMask2(dim=(4000, 4000), resize=(4000, 4000), saveOnline=True)
+    objects = ['rock']
+    polygon = polygonReader("C3_test", objects)
+    masks = polygon.generateMask2(dim=(400, 400), resize=(400, 400), saveOnline=True)
