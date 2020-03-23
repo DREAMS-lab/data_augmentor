@@ -65,17 +65,20 @@ class LabelboxReader(object):
             dataset_name = label['Dataset Name']
             image_name = label['External ID']
 
-            if label['Label'] == 'Skip':
+            if not label['Label']:
                 nd_label = np.zeros((1, self.H, self.W))
                 cls = np.zeros(1)
-            elif label['Label'].get('tile_dmg', False):
-                if label['Label']['tile_dmg'] == 'nd':
+            elif label['Label'] == 'Skip':
+                nd_label = np.zeros((1, self.H, self.W))
+                cls = np.zeros(1)
+            elif label['Label'].get('tile_damage', False):
+                if label['Label']['tile_damage'] == 'non_damage':
+
                     nd_label = np.zeros((1, self.H, self.W))
                     cls = np.zeros(1)
                 else:
                     cls, nd_label = self.convert2ndarray(label['Label'])
             else:
-
                 cls, nd_label = self.convert2ndarray(label['Label'])
 
             # save ndarray and classes in two files
@@ -84,10 +87,10 @@ class LabelboxReader(object):
 
             cls_file_name = dataset_name + "_" + image_name.split('.')[0] + "_cls.npy"
             nd_file_name = dataset_name + "_" + image_name.split('.')[0] + "_nd.npy"
-            np.save("../Eureka/labels/" + cls_file_name, cls, allow_pickle=True)
-            np.save("../Eureka/labels/" + nd_file_name, nd_label, allow_pickle=True)
+            np.save("./datasets/Eureka/labels/" + cls_file_name, cls, allow_pickle=True)
+            np.save("./datasets/Eureka/labels/" + nd_file_name, nd_label, allow_pickle=True)
 
 if __name__  ==  "__main__":
     lb = LabelboxReader(image_size=(1000, 1000))
-    lb.readJson("../Eureka/labels.json")
+    lb.readJson("./datasets/Eureka/labels.json")
     lb.convert()
