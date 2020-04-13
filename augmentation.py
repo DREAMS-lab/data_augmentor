@@ -16,6 +16,7 @@ import os
 import matplotlib.pyplot as plt
 
 def rotateImage(image, angle):
+    image = image.astype(np.uint8)
     l = len(image.shape)
     image_center = tuple(np.array(image.shape[:2]) / 2)
     rot_mat = cv2.getRotationMatrix2D(image_center, angle, 1.0)
@@ -52,25 +53,25 @@ def zoom(image, zoom_scale):
     
     if len(size) == 3:
         if zoom_scale > 1:
-            return image[(new_size[0] - size[0]) / 2:(new_size[0] - size[0]) / 2 + size[0],
-                        (new_size[1] - size[1]) / 2:(new_size[1] - size[1]) / 2 + size[1], :]
+            return image[int((new_size[0] - size[0]) / 2):int((new_size[0] - size[0]) / 2 + size[0]),
+                   int((new_size[1] - size[1]) / 2):int((new_size[1] - size[1]) / 2 + size[1]), :]
         elif zoom_scale == 1:
             return image
         else:
             new_image = np.zeros(size).astype('uint8')
-            new_image[(size[0] - new_size[0]) / 2:(size[0] - new_size[0]) / 2 + new_size[0],
-            (size[1] - new_size[1]) / 2:(size[1] - new_size[1]) / 2 + new_size[1], :] = image
+            new_image[int((size[0] - new_size[0]) / 2):int((size[0] - new_size[0]) / 2 + new_size[0]),
+            int((size[1] - new_size[1]) / 2):int((size[1] - new_size[1]) / 2 + new_size[1]), :] = image
             return new_image
     else:
         if zoom_scale > 1:
-            return image[(new_size[0]-size[0])/2:(new_size[0]-size[0])/2+size[0],
-                        (new_size[1]-size[1])/2:(new_size[1]-size[1])/2+size[1]]
+            return image[int((new_size[0]-size[0])/2):int((new_size[0]-size[0])/2+size[0]),
+                        int((new_size[1]-size[1])/2):int((new_size[1]-size[1])/2+size[1])]
         elif zoom_scale == 1:
             return image
         else:
             new_image = np.zeros(size).astype('uint8')
-            new_image[(size[0] - new_size[0]) / 2:(size[0] - new_size[0]) / 2 + new_size[0],
-            (size[1] - new_size[1]) / 2:(size[1] - new_size[1]) / 2 + new_size[1]] = image
+            new_image[int((size[0] - new_size[0]) / 2):int((size[0] - new_size[0]) / 2 + new_size[0]),
+            int((size[1] - new_size[1]) / 2):int((size[1] - new_size[1]) / 2 + new_size[1])] = image
             return new_image
 
 
@@ -151,8 +152,8 @@ def augmentor(image_path, annotation_path, mode=1, resize_dim=None, batch_number
 
 if __name__  ==  "__main__":
     config = dict(
-                mode=1,
-                resize_dim=(800, 800),
+                mode=2,
+                resize_dim=(500, 500),
                 batch_number=2,
                 rotation_min=-90,
                 rotation_max=90,
@@ -161,8 +162,8 @@ if __name__  ==  "__main__":
                 zoom_min=0.8,
                 zoom_max=1.2)
 
-    image_path = './datasets/tornado/img/'
-    annotation_path = './datasets/tornado/anng/'
+    image_path = './datasets/Crater/image/'
+    annotation_path = './datasets/Crater/npy/'
     aug = augmentor(image_path, annotation_path, **config)
 
     for i,m,f in aug:
