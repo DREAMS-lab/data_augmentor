@@ -88,14 +88,14 @@ class TFConverter(object):
         self.annotation_path = annotation_path
         self.image_path = image_path
         self.annotations = [f for f in os.listdir(annotation_path) if f.endswith(".npy")]
-        self.images = [i for i in os.listdir(image_path) if i.endswith("jpg")]
+        self.images = [i for i in os.listdir(image_path) if (i.endswith("png") or i.endswith("jpg"))]
 
     def convert(self, gray_scale=False, output_path="."):
         writer = tf.io.TFRecordWriter(output_path + "/tf.record")
         for image in self.images:
             annotation = image.split(".")[0] + ".npy"
             if annotation not in self.annotations:
-                print("No annotation file. Ignore "+image)
+                print("No annotation file: Ignore "+image)
                 continue
             else:
                 annotation_file = os.path.join(self.annotation_path, annotation)
@@ -132,6 +132,9 @@ class TFConverter(object):
         width = image.width
         height = image.height
         masks = np.load(annotation_file_path)
+        masks = np.swapaxes(masks, axis1=0, axis2=1)
+        masks = np.swapaxes(masks, axis1=1, axis2=2)
+        masks = (masks > 0.5) * 255
         if len(masks.shape) == 2:
             masks = np.expand_dims(masks, 2)
         obj_nm = masks.shape[-1]
@@ -197,5 +200,6 @@ class TFConverter(object):
 
 
 if __name__ == "__main__":
-    tfrecorder = TFConverter(['rock'], "./datasets/rocks", "./datasets/rocks")
+    tfrecorder = TFConverter(['crater'], "./npy", "./moon_images")
     tfrecorder.convert(gray_scale=True)
+
